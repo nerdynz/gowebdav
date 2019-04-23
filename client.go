@@ -363,10 +363,14 @@ func (c *Client) Write(path string, data []byte, _ os.FileMode) error {
 // WriteStream writes a stream
 func (c *Client) WriteStream(path string, stream io.Reader, _ os.FileMode) error {
 
-	err := c.createParentCollection(path)
-	if err != nil {
-		return err
-	}
+
+	// REMOVE create folder. USE mkdirALL before writing stream. 
+	// This was causing errors where part of the path was not writable because it tried to write all paths
+	
+	// err := c.createParentCollection(path)
+	// if err != nil {
+	// 	return err
+	// }
 
 	s := c.put(path, stream)
 
